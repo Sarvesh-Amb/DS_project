@@ -1,56 +1,48 @@
-# 🟩 Wordle DS Clone 🟨
+# 🟩🟨⬛ DS_project: AVL-Powered Wordle Clone
 
-A terminal-based, interactive Wordle game written in Python. This project highlights core Data Structures and Algorithms by implementing a Trie (Prefix Tree) for efficient word management, alongside dynamic CSV file loading and auto-updating.
+A terminal-based Python implementation of the classic Wordle game, enhanced with a self-balancing binary search tree (**AVL Tree**) for efficient dictionary management, custom word ingestion, and robust validation.
 
 ---
 
 ## 🚀 Features
 
-* Interactive Turn-Based Gameplay: Play standard 6-attempt Wordle right in your terminal.
-* Custom Word Mode: Choose to play a random word or input your own custom secret word.
-* Dynamic CSV Dictionary & Auto-Save: If you enter a custom 5-letter word that isn't in the dictionary, the program automatically sanitizes it, validates it, and appends it to words.csv.
-* Tree Data Structure: Uses a Prefix Tree to store, manage, and validate the game's vocabulary.
-* Visual Feedback: Uses standard Wordle emoji indicators (🟩 Correct Position, 🟨 Wrong Position, ⬛ Not in Word).
+* **Self-Balancing AVL Tree:** Replaces linear searches with an $O(\log n)$ balanced binary search tree to guarantee high-performance dictionary lookups.
+* **Dynamic Word Ingestion:** Add custom 5-letter secret words on the fly; they are automatically validated, appended persistently to `words.csv`, and dynamically balanced into the runtime AVL tree.
+* **Authentic Feedback Engine:** Features a two-pass color-coded evaluation mechanism delivering precise visual feedback:
+  * 🟩 **Green:** Correct letter in the correct position.
+  * 🟨 **Yellow:** Correct letter in the wrong position.
+  * ⬛ **Gray:** Letter not present in the secret word.
+* **Terminal-Friendly & Lightweight:** Designed for clean execution in Unix/Linux and Windows terminal environments using standard file I/O operations.
 
 ---
 
-## 📂 Project Structure
+## 🧠 Architectural Overview & AVL Tree Logic
 
-DS_project/
-├── main.py          # Main game loop, Game Master logic, and Trie data structure
-├── words.csv        # Dictionary file containing 5-letter words
-└── README.md        # Project documentation
+To maintain lightning-fast validation as the vocabulary grows, the project utilizes an **AVL Tree**:
 
----
-
-## 🛠️ Getting Started & Installation
-
-### Prerequisites
-Make sure you have Python 3 installed on your system.
-
-### 1. Clone the Repository
-Open your terminal and clone the project:
-git clone https://github.com/Sarvesh-Amb/DS_project.git
-cd DS_project
-
-### 2. Run the Game
-Execute the main script to start playing:
-python3 main.py
+1. **Height Balance & Rotations:** Standard Binary Search Trees can degrade into linear chains ($O(n)$) when words are inserted sequentially. The AVL tree monitors balance factors and automatically performs single and double rotations (`_left_rotate`, `_right_rotate`) to maintain a strict logarithmic height.
+2. **Search & Verification:** Lookups (`search`) traverse left or right recursively based on alphabetical comparisons against node values.
+3. **Persistent File Handling:** Loads and deduplicates 5-letter alphabetical entries from `words.csv`, initializing a robust default vocabulary if no file is present.
 
 ---
 
-## 🎮 How to Play
+## 🛠️ Code Structure & Function Reference
 
-1. Run the script. Choose whether you want the game to pick a random word or if you want to make your own secret word.
-2. If you choose a random word, you can optionally choose to peek at it or keep it a surprise.
-3. If you make your own word, type a valid 5-letter alphabetic word (spaces and case will be automatically handled/sanitized).
-4. Enter your guesses and use the feedback signs to narrow down the answer:
-   * 🟩 Green: Correct letter in the correct position.
-   * 🟨 Yellow: Correct letter in the wrong position.
-   * ⬛ Gray: Letter is not in the word.
-5. Guess the word within 6 attempts to win!
+| Component / Function | Description |
+| :--- | :--- |
+| **`AVLNode`** | Represents an individual node holding the word string, left/right child pointers, and height metadata. |
+| **`AVLTree` & Rotations** | Manages root reference, height computation, balance factor checks, and single/double rotations (`_left_rotate`, `_right_rotate`). |
+| **`insert` / `_insert_rec`** | Handles recursive word insertion with automatic balance restoration. |
+| **`search` / `_search_rec`** | Performs logarithmic lookup queries across the AVL tree. |
+| **`load_and_initialize_avl`** | Parses, cleans, and deduplicates 5-letter entries from `words.csv` and populates the AVL structure. |
+| **`evaluate_guess`** | Executes the two-pass algorithm to analyze guess accuracy and return exact visual indicators (`🟩`, `🟨`, `⬛`). |
+| **`play_game`** | Orchestrates the primary game loop, welcome screen, mode selection, attempt tracking (up to 6 tries), and win/loss resolution. |
 
 ---
 
-## 💡 Data Structure Highlight: Trie
-The game uses a Trie (Prefix Tree) data structure to store words. Instead of linear searching through a list every time a word needs validation, the Trie allows for fast lookups, making vocabulary checks highly efficient.
+## 📥 Installation & Running the Project
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Sarvesh-Amb/DS_project.git](https://github.com/Sarvesh-Amb/DS_project.git)
+   cd DS_project
