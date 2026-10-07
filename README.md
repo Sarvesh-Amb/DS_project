@@ -9,7 +9,7 @@ A terminal-based, interactive Wordle game written in Python. This project highli
 * Interactive Turn-Based Gameplay: Play standard 6-attempt Wordle right in your terminal.
 * Custom Word Mode: Choose to play a random word or input your own custom secret word.
 * Dynamic CSV Dictionary & Auto-Save: If you enter a custom 5-letter word that isn't in the dictionary, the program automatically sanitizes it, validates it, and appends it to words.csv.
-* Trie Data Structure: Uses a Prefix Tree to store, manage, and validate the game's vocabulary.
+* Tree Data Structure: Uses a Prefix Tree to store, manage, and validate the game's vocabulary.
 * Visual Feedback: Uses standard Wordle emoji indicators (🟩 Correct Position, 🟨 Wrong Position, ⬛ Not in Word).
 
 ---
